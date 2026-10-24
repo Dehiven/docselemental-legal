@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="index,follow">
+<title>Política de privacidad — Docselemental</title>
+<style>
+  :root { --fg:#1a1a1a; --muted:#5a5a5a; --accent:#A41B0E; --bg:#fafafa; --card:#fff; --border:#e5e5e5; }
+  @media (prefers-color-scheme: dark){
+    :root { --fg:#f0f0f0; --muted:#b0b0b0; --accent:#ff6b5a; --bg:#161616; --card:#1f1f1f; --border:#2b2b2b; }
+  }
+  html,body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+  main{max-width:720px;margin:0 auto;padding:24px 20px 64px;background:var(--card)}
+  h1{font-size:1.75rem;margin:0 0 4px;line-height:1.25}
+  h2{font-size:1.15rem;margin:2em 0 .5em;border-bottom:1px solid var(--border);padding-bottom:.3em}
+  .meta{color:var(--muted);font-size:.9rem;margin-bottom:1.5em}
+  table{border-collapse:collapse;width:100%;margin:1em 0;font-size:.95rem}
+  th,td{border:1px solid var(--border);padding:.5em .7em;text-align:left;vertical-align:top}
+  th{background:var(--bg);font-weight:600}
+  a{color:var(--accent)}
+  code{background:var(--bg);padding:1px 5px;border-radius:4px;font-size:.9em}
+  .note{background:var(--bg);border-left:3px solid var(--accent);padding:.8em 1em;margin:1em 0;color:var(--muted);font-size:.9rem}
+  ul{padding-left:1.3em}
+  footer{color:var(--muted);font-size:.85rem;text-align:center;padding:24px}
+</style>
+</head>
+<body>
+<main>
+
+<h1>Política de privacidad — Docselemental</h1>
+<div class="meta"><strong>Versión 1.0</strong> · Última actualización: 24 de octubre de 2026</div>
+
+<p>Esta política explica cómo Docselemental (en adelante, "la app") trata los datos personales de las personas usuarias.</p>
+
+<h2>1. Responsable del tratamiento</h2>
+<ul>
+<li><strong>Responsable:</strong> Carlos Vaquero</li>
+<li><strong>Correo de contacto:</strong> <a href="mailto:vaqueromuelacarlos@gmail.com">vaqueromuelacarlos@gmail.com</a></li>
+<li><strong>Dirección postal:</strong> Torrevieja, España</li>
+</ul>
+<p>Si tienes preguntas sobre esta política o sobre tus datos, escríbenos a ese correo.</p>
+
+<h2>2. Qué datos recogemos y para qué</h2>
+<table>
+<tr><th>Dato</th><th>De dónde viene</th><th>Para qué se usa</th></tr>
+<tr><td>Correo electrónico</td><td>Lo introduces al registrarte</td><td>Identificarte, iniciar sesión y comunicarnos contigo si hay problemas con tu cuenta.</td></tr>
+<tr><td>Contraseña (cifrada)</td><td>La introduces al registrarte</td><td>Autenticarte. Nunca almacenamos tu contraseña en claro; se usa el sistema de autenticación de Supabase.</td></tr>
+<tr><td>Nombre completo (opcional)</td><td>Lo introduces en tu perfil</td><td>Personalizar la interfaz y aparecer en la página de firma de los documentos que firmes.</td></tr>
+<tr><td>Empresa o cargo (opcional)</td><td>Lo introduces en tu perfil</td><td>Mostrar tu rol en tu perfil.</td></tr>
+<tr><td>Documentos (PDF, DOCX, hojas, escaneos, documentos creados en la app)</td><td>Los subes o los creas tú</td><td>Guardarlos para que puedas abrirlos desde cualquier dispositivo.</td></tr>
+<tr><td>Metadatos de documentos (nombre, tamaño, tipo, fecha, estado de firma)</td><td>Se calculan al subir o crear</td><td>Mostrar la biblioteca, ordenar, filtrar y buscar.</td></tr>
+<tr><td>Firma dibujada y nombre del firmante</td><td>Los generas tú al firmar un documento</td><td>Estampar la firma en el PDF firmado y guardarlo como copia nueva.</td></tr>
+<tr><td>Hash SHA-256 del documento original y del firmado</td><td>Se calcula al firmar</td><td>Guardar constancia de que el documento no se ha modificado (registro de auditoría append-only).</td></tr>
+<tr><td>Eventos de firma (quién, cuándo, hashes, identificador)</td><td>Se generan al firmar</td><td>Guardarlos en la tabla <code>signature_events</code> y emitir un certificado PDF del servidor junto al documento firmado.</td></tr>
+</table>
+
+<h2>3. Qué NO hacemos con tus datos</h2>
+<ul>
+<li><strong>No vendemos</strong> tus datos.</li>
+<li><strong>No los compartimos</strong> con terceros con fines publicitarios o de marketing.</li>
+<li><strong>No usamos tus documentos</strong> para entrenar modelos de inteligencia artificial.</li>
+<li><strong>No incluimos</strong> publicidad ni rastreadores de terceros.</li>
+<li><strong>No usamos</strong> herramientas de analítica que te identifiquen.</li>
+</ul>
+
+<h2>4. Proveedores que tratan datos por nosotros (encargados)</h2>
+<p>Para que la app funcione usamos los siguientes proveedores. Firmaremos con ellos los contratos de encargo del tratamiento que exige el RGPD (art. 28).</p>
+<table>
+<tr><th>Proveedor</th><th>Qué hace</th><th>Dónde</th></tr>
+<tr><td>Supabase, Inc.</td><td>Autenticación, base de datos (Postgres) y almacenamiento de los documentos.</td><td>Región UE configurada por el responsable (por defecto <code>eu-west-1</code>, Irlanda).</td></tr>
+<tr><td>Google LLC — Play Services, ML Kit Document Scanner</td><td>Reconocimiento de documentos y recorte durante el escaneo. <strong>Se ejecuta íntegramente en tu dispositivo</strong>; no se envían imágenes a Google.</td><td>Tu dispositivo.</td></tr>
+<tr><td>Google LLC — Inicio de sesión con Google (si lo utilizas)</td><td>Comprobar tu identidad al iniciar sesión con Google.</td><td>Infraestructura de Google.</td></tr>
+</table>
+
+<h2>5. Dónde se guardan tus datos</h2>
+<p>Los documentos y los metadatos se guardan en el proyecto de Supabase del responsable (región UE por defecto, <code>eu-west-1</code>, Irlanda). Se aplica <strong>seguridad a nivel de fila (RLS)</strong>: cada persona solo accede a sus propios documentos. Las comunicaciones viajan <strong>cifradas (HTTPS/TLS)</strong>.</p>
+
+<h2>6. Cuánto tiempo guardamos tus datos</h2>
+<p>Mientras tu cuenta esté activa. Cuando pidas borrar la cuenta desde <strong>Perfil → Borrar cuenta</strong>, se borrarán de forma inmediata: tus documentos, tu perfil y tu usuario del sistema de autenticación. El borrado es definitivo y no se puede deshacer.</p>
+
+<h2>7. Tus derechos (RGPD)</h2>
+<ul>
+<li><strong>Acceso</strong>, <strong>rectificación</strong>, <strong>supresión</strong>, <strong>limitación</strong>, <strong>portabilidad</strong> y <strong>oposición</strong>.</li>
+<li><strong>No ser objeto de decisiones automatizadas</strong> que te afecten significativamente (en Docselemental no realizamos este tipo de decisiones).</li>
+</ul>
+<p>Para ejercerlos escribe a <a href="mailto:vaqueromuelacarlos@gmail.com">vaqueromuelacarlos@gmail.com</a>. Responderemos en un plazo máximo de un mes.</p>
+<p>También puedes reclamar ante la <strong>Agencia Española de Protección de Datos</strong> (<a href="https://www.aepd.es" target="_blank" rel="noopener">www.aepd.es</a>) si consideras que no te hemos atendido correctamente.</p>
+
+<h2>8. Cookies y almacenamiento local</h2>
+<p>La app usa almacenamiento local del dispositivo (<code>SharedPreferences</code>) para guardar pequeñas preferencias técnicas: la última página leída de cada PDF y si tienes activado el modo "página oscura". No usamos cookies de terceros ni para rastreo.</p>
+
+<h2>9. Menores de edad</h2>
+<p>La app está pensada para personas mayores de edad (18 años). Si eres menor de 14, no puedes crear una cuenta sin el consentimiento de tus padres o tutores legales.</p>
+
+<h2>10. Seguridad</h2>
+<p>Aplicamos las medidas técnicas y organizativas razonables para proteger tus datos: cifrado en tránsito (TLS), autenticación con contraseñas cifradas y control de acceso por fila (RLS de Supabase). Ningún sistema es infalible. Si detectas una vulnerabilidad, escríbenos a <a href="mailto:vaqueromuelacarlos@gmail.com">vaqueromuelacarlos@gmail.com</a>.</p>
+
+<h2>11. Cambios de esta política</h2>
+<p>Si cambiamos esta política, publicaremos la nueva versión en la app y, si los cambios son significativos, te avisaremos por correo. La fecha de la última revisión aparece al principio.</p>
+
+<h2>12. Ley aplicable</h2>
+<p>Esta política se rige por la legislación española y el <strong>Reglamento (UE) 2016/679 (RGPD)</strong>.</p>
+
+</main>
+<footer>Docselemental · <a href="terminos-uso.html">Términos de uso</a></footer>
+</body>
+</html>
