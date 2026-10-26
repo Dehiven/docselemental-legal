@@ -1,6 +1,55 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#2a0505"/>
-  <text x="32" y="44" text-anchor="middle"
-        font-family="Satoshi, -apple-system, 'Helvetica Neue', Arial, sans-serif"
-        font-weight="700" font-size="38" fill="#ff6b3d">D</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5B74FF"/>
+      <stop offset="0.55" stop-color="#3D5AFE"/>
+      <stop offset="1" stop-color="#2233B0"/>
+    </linearGradient>
+    <radialGradient id="glowPeach" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FFC7A8" stop-opacity="0.75"/>
+      <stop offset="1" stop-color="#FFC7A8" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowMint" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#A6E8D4" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#A6E8D4" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.28"/>
+      <stop offset="0.45" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="mint" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7BE3C4"/>
+      <stop offset="1" stop-color="#2FB58C"/>
+    </linearGradient>
+    <linearGradient id="peach" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFC9A6"/>
+      <stop offset="1" stop-color="#FF9466"/>
+    </linearGradient>
+    <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#EEF1FA"/>
+    </linearGradient>
+    <linearGradient id="shade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0B1460" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="#0B1460" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+  <circle cx="860" cy="150" r="420" fill="url(#glowPeach)"/>
+  <circle cx="120" cy="930" r="440" fill="url(#glowMint)"/>
+  <rect width="1024" height="1024" fill="url(#sheen)"/>
+
+  <rect x="230" y="262" width="380" height="500" rx="38" fill="url(#mint)" transform="rotate(-20 420 512)"/>
+  <rect x="414" y="262" width="380" height="500" rx="38" fill="url(#peach)" transform="rotate(20 604 512)"/>
+
+  <rect x="251" y="211" width="492" height="630" rx="40" fill="url(#shade)"/>
+  <rect x="243" y="187" width="492" height="630" rx="40" fill="url(#paper)"/>
+  <rect x="244.5" y="188.5" width="489" height="627" rx="38.5" fill="none" stroke="#FFFFFF" stroke-width="3"/>
+
+  <rect x="342" y="350" width="286" height="32" rx="16" fill="#C9D1EA"/>
+  <rect x="342" y="433" width="286" height="32" rx="16" fill="#C9D1EA"/>
+  <rect x="342" y="514" width="200" height="32" rx="16" fill="#C9D1EA"/>
+
+  <path d="M402 645C418 700 430 716 441 712C463 704 482 575 508 573C534 571 552 700 577 700C600 700 620 622 648 588" fill="none" stroke="#3D5AFE" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
