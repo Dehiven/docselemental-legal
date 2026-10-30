@@ -224,7 +224,7 @@
           otp_wrong: 'Código incorrecto.',
           otp_too_many_attempts: 'Demasiados intentos. Pide un código nuevo.',
         };
-        say(errors[data.error] || 'No se pudo firmar. Pide un código nuevo y vuelve a intentarlo.', true);
+        say(errors[data.error] || 'No se pudo firmar. Vuelve a intentarlo dentro de un momento.' + (data.error ? ' (' + data.error + ')' : ''), true);
         btn.disabled = false;
       });
     }).catch(function () {
