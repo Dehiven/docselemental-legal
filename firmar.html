@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<!-- El enlace lleva el token de la solicitud: que no salga hacia otras webs. -->
+<meta name="referrer" content="no-referrer">
+<title>Firmar documento · Docselemental</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap">
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #E9EDF5; --ink: #0D1324; --ink2: #3E485C; --ink3: #566076;
+    --card: rgba(255,255,255,.72); --stroke: rgba(255,255,255,.92); --hair: rgba(13,19,36,.12);
+    --field: rgba(255,255,255,.8); --accent: #3D5AFE; --accent-ink: #3D5AFE;
+    --danger: #C4262C; --ok: #157A47; --sh: 0 12px 32px rgba(32,44,90,.10);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      --bg: #090C14; --ink: #F2F4F9; --ink2: #C3CAD8; --ink3: #9CA5B8;
+      --card: rgba(28,34,52,.72); --stroke: rgba(255,255,255,.12); --hair: rgba(255,255,255,.14);
+      --field: rgba(255,255,255,.06); --accent-ink: #8FA2FF;
+      --danger: #FF8A8E; --ok: #5BD69A; --sh: 0 12px 32px rgba(0,0,0,.45);
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; padding: 24px 16px 40px; background: var(--bg); color: var(--ink);
+    font: 500 16px/1.45 Satoshi, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 560px; margin: 0 auto; }
+  .brand { display: flex; align-items: center; gap: 10px; margin: 0 0 20px; font-size: 18px; font-weight: 800; letter-spacing: -.02em; }
+  .brand img { width: 36px; height: 36px; border-radius: 10px; }
+  .card { background: var(--card); border: 1px solid var(--stroke); border-radius: 30px; padding: 20px;
+    box-shadow: var(--sh); }
+  h1 { margin: 0 0 12px; font-size: 26px; line-height: 1.15; font-weight: 800; letter-spacing: -.02em; }
+  p { margin: 0; }
+  .muted { color: var(--ink2); }
+  .meta { color: var(--ink3); font-size: 14px; overflow-wrap: anywhere; }
+  .meta b { color: var(--ink); font-weight: 700; }
+  .meta + .meta { margin-top: 4px; }
+  blockquote { margin: 12px 0 0; padding-left: 12px; border-left: 3px solid var(--hair); color: var(--ink2); overflow-wrap: anywhere; }
+  a { color: var(--accent-ink); font-weight: 700; }
+  .view { display: inline-flex; align-items: center; min-height: 44px; margin-top: 4px; }
+  label { display: block; margin: 16px 0 6px; font-size: 13px; font-weight: 700; color: var(--ink2); overflow-wrap: anywhere; }
+  input { width: 100%; height: 52px; padding: 0 14px; border-radius: 16px; border: 1px solid var(--hair);
+    background: var(--field); color: var(--ink); font: inherit; }
+  input:focus-visible, button:focus-visible, a:focus-visible, canvas:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 2px; }
+  .pad { margin-top: 6px; padding: 6px; border-radius: 20px; border: 1px dashed var(--hair); background: #fff; }
+  canvas { display: block; width: 100%; height: auto; touch-action: none; cursor: crosshair; }
+  .row { display: flex; gap: 10px; margin-top: 12px; }
+  .row > * { flex: 1; min-width: 0; }
+  .primary { flex: 1.3 !important; }
+  button { min-height: 52px; padding: 0 10px; font-size: 15px; border-radius: 26px; border: 1px solid transparent; font-family: inherit; font-weight: 700; cursor: pointer; }
+  .primary { background: var(--accent); color: #fff; }
+  .ghost { background: transparent; color: var(--ink); border-color: var(--hair); }
+  button:disabled { opacity: .55; cursor: not-allowed; }
+  #msg { min-height: 22px; margin-top: 12px; color: var(--ink2); }
+  #msg.err { color: var(--danger); font-weight: 700; }
+  .note { margin-top: 12px; color: var(--ink3); font-size: 12px; line-height: 1.5; }
+  .ok { color: var(--ok); }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <p class="brand"><img src="/logo.png" alt="" width="36" height="36">Docselemental</p>
+
+  <div class="card" id="state" aria-live="polite">
+    <h1 id="stateTitle">Cargando…</h1>
+    <p class="muted" id="stateText"></p>
+  </div>
+
+  <form class="card" id="form" hidden novalidate>
+    <h1>Firmar documento</h1>
+    <p class="meta">Documento: <b id="docName"></b></p>
+    <p class="meta">Destinatario: <b id="email"></b></p>
+    <blockquote id="message" hidden></blockquote>
+    <a class="view" id="preview" target="_blank" rel="noopener noreferrer" hidden>Ver el documento (PDF)</a>
+
+    <label for="name">Tu nombre</label>
+    <input id="name" type="text" autocomplete="name" placeholder="Nombre y apellidos">
+
+    <div id="otpBlock" hidden>
+      <label for="otp">Código enviado a <span id="otpEmail"></span></label>
+      <div class="row">
+        <button id="sendOtp" type="button" class="ghost">Enviar código</button>
+        <input id="otp" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="123456">
+      </div>
+    </div>
+
+    <label for="pad">Firma</label>
+    <div class="pad"><canvas id="pad" width="640" height="220" role="img" aria-label="Zona para dibujar tu firma"></canvas></div>
+    <div class="row">
+      <button id="clear" type="button" class="ghost">Limpiar</button>
+      <button id="go" type="submit" class="primary">Firmar y enviar</button>
+    </div>
+    <p id="msg" role="status"></p>
+    <p class="note" id="note"></p>
+  </form>
+</main>
+
+<script>
+(function () {
+  var ENDPOINT = 'https://rxgfzgqhxlpiymoibyuj.supabase.co/functions/v1/sign_external';
+  var token = new URLSearchParams(location.search).get('t') || '';
+  var url = ENDPOINT + '?t=' + encodeURIComponent(token);
+  var $ = function (id) { return document.getElementById(id); };
+  var otpRequired = false;
+
+  function say(text, isError) {
+    $('msg').textContent = text;
+    $('msg').className = isError ? 'err' : '';
+  }
+
+  function show(title, text, ok) {
+    $('form').hidden = true;
+    $('state').hidden = false;
+    $('stateTitle').textContent = title;
+    $('stateTitle').className = ok ? 'ok' : '';
+    $('stateText').textContent = text;
+  }
+
+  var STATES = {
+    missing_token: ['Enlace incompleto', 'Abre el enlace completo que recibiste por correo.'],
+    not_found: ['Enlace no válido', 'Este enlace no es válido o ha caducado.'],
+    already_signed: ['Ya firmado', 'Este documento ya está firmado. Gracias.'],
+    cancelled: ['Solicitud cancelada', 'Quien te la envió ha cancelado esta solicitud.'],
+    expired: ['Solicitud caducada', 'El plazo para firmar ha terminado. Pide a quien te la envió una nueva.'],
+    document_unavailable: ['Documento no disponible', 'Quien te lo envió ya no tiene este documento.'],
+  };
+
+  function post(body) {
+    return fetch(url, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+  }
+
+  function setupPad() {
+    var canvas = $('pad');
+    var ctx = canvas.getContext('2d');
+    ctx.lineWidth = 2.4;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = '#111';
+    var drawing = false, last = null;
+    canvas.hasInk = false;
+    function at(e) {
+      var r = canvas.getBoundingClientRect();
+      return { x: (e.clientX - r.left) * canvas.width / r.width, y: (e.clientY - r.top) * canvas.height / r.height };
+    }
+    canvas.addEventListener('pointerdown', function (e) {
+      drawing = true;
+      last = at(e);
+      canvas.setPointerCapture(e.pointerId);
+      e.preventDefault();
+    });
+    canvas.addEventListener('pointermove', function (e) {
+      if (!drawing) return;
+      var p = at(e);
+      ctx.beginPath();
+      ctx.moveTo(last.x, last.y);
+      ctx.lineTo(p.x, p.y);
+      ctx.stroke();
+      last = p;
+      canvas.hasInk = true;
+      e.preventDefault();
+    });
+    ['pointerup', 'pointercancel'].forEach(function (t) {
+      canvas.addEventListener(t, function () { drawing = false; });
+    });
+    $('clear').onclick = function () {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      canvas.hasInk = false;
+    };
+  }
+
+  $('sendOtp').onclick = function () {
+    var btn = $('sendOtp');
+    btn.disabled = true;
+    say('Enviando código…');
+    post({ action: 'send_otp' }).then(function (res) {
+      return res.json().catch(function () { return {}; }).then(function (data) {
+        if (res.ok) {
+          say('Código enviado. Revisa tu correo, también la carpeta de spam.');
+          btn.textContent = 'Reenviar código';
+          setTimeout(function () { btn.disabled = false; }, 60000);
+          return;
+        }
+        if (STATES[data.error]) return show(STATES[data.error][0], STATES[data.error][1]);
+        say(data.error === 'cooldown'
+          ? 'Espera ' + (data.retry_in_seconds || 30) + ' s para pedir otro código.'
+          : 'No se pudo enviar el código. Inténtalo de nuevo.', true);
+        setTimeout(function () { btn.disabled = false; }, 5000);
+      });
+    }).catch(function () {
+      say('Error de red. Inténtalo de nuevo.', true);
+      btn.disabled = false;
+    });
+  };
+
+  $('form').onsubmit = function (e) {
+    e.preventDefault();
+    var name = $('name').value.trim();
+    var code = $('otp').value.trim();
+    if (!name) return say('Escribe tu nombre.', true);
+    if (otpRequired && !/^\d{6}$/.test(code)) return say('Introduce el código de 6 dígitos que has recibido por correo.', true);
+    if (!$('pad').hasInk) return say('Dibuja tu firma antes de enviar.', true);
+    var btn = $('go');
+    btn.disabled = true;
+    say('Enviando…');
+    var payload = { signer_name: name, signature_png_b64: $('pad').toDataURL('image/png') };
+    if (otpRequired) payload.otp_code = code;
+    post(payload).then(function (res) {
+      return res.json().catch(function () { return {}; }).then(function (data) {
+        if (res.ok) return show('¡Firmado!', 'Gracias. Quien te envió el documento recibirá la copia firmada.', true);
+        if (STATES[data.error]) return show(STATES[data.error][0], STATES[data.error][1]);
+        var errors = {
+          otp_required: 'Pide primero el código.',
+          otp_expired: 'El código ha caducado. Pide uno nuevo.',
+          otp_wrong: 'Código incorrecto.',
+          otp_too_many_attempts: 'Demasiados intentos. Pide un código nuevo.',
+        };
+        say(errors[data.error] || 'No se pudo firmar. Pide un código nuevo y vuelve a intentarlo.', true);
+        btn.disabled = false;
+      });
+    }).catch(function () {
+      say('Error de red. Inténtalo de nuevo.', true);
+      btn.disabled = false;
+    });
+  };
+
+  if (!token) return show(STATES.missing_token[0], STATES.missing_token[1]);
+
+  fetch(url).then(function (res) {
+    return res.json().then(function (data) {
+      if (!res.ok || data.error) {
+        var s = STATES[data.error] || ['No se pudo abrir', 'Inténtalo de nuevo dentro de un momento.'];
+        return show(s[0], s[1]);
+      }
+      otpRequired = !!data.otp_required;
+      $('docName').textContent = data.doc_name;
+      $('email').textContent = data.signer_email;
+      $('otpEmail').textContent = data.signer_email;
+      $('name').value = data.signer_name || '';
+      if (data.message) {
+        $('message').textContent = data.message;
+        $('message').hidden = false;
+      }
+      if (/^https:\/\//.test(data.preview_url || '')) {
+        $('preview').href = data.preview_url;
+        $('preview').hidden = false;
+      }
+      $('otpBlock').hidden = !otpRequired;
+      $('note').textContent = 'Firma propia aplicada en el servidor. Deja constancia de la fecha, la huella del documento y '
+        + (otpRequired ? 'la verificación por correo' : 'la identidad declarada')
+        + ', pero no es una firma electrónica cualificada del Reglamento eIDAS.';
+      setupPad();
+      $('state').hidden = true;
+      $('form').hidden = false;
+    });
+  }).catch(function () {
+    show('No se pudo abrir', 'Comprueba tu conexión e inténtalo de nuevo.');
+  });
+})();
+</script>
+</body>
+</html>

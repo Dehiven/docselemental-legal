@@ -3,7 +3,7 @@
 Página pública de **Docselemental**, la oficina virtual de documentos para
 Android. Este repositorio también sirve los documentos legales de la app.
 
-🔗 **Sitio en vivo:** <https://dehiven.github.io/docselemental-legal/>
+🔗 **Sitio en vivo:** <https://docselemental.com/>
 
 ## Qué hay aquí
 
