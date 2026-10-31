@@ -29,7 +29,7 @@
 <main>
 
 <h1>Política de privacidad — Docselemental</h1>
-<div class="meta"><strong>Versión 1.0</strong> · Última actualización: 24 de octubre de 2026</div>
+<div class="meta"><strong>Versión 1.1</strong> · Última actualización: 31 de octubre de 2026</div>
 
 <p>Esta política explica cómo Docselemental (en adelante, "la app") trata los datos personales de las personas usuarias.</p>
 
@@ -53,6 +53,11 @@
 <tr><td>Firma dibujada y nombre del firmante</td><td>Los generas tú al firmar un documento</td><td>Estampar la firma en el PDF firmado y guardarlo como copia nueva.</td></tr>
 <tr><td>Hash SHA-256 del documento original y del firmado</td><td>Se calcula al firmar</td><td>Guardar constancia de que el documento no se ha modificado (registro de auditoría append-only).</td></tr>
 <tr><td>Eventos de firma (quién, cuándo, hashes, identificador)</td><td>Se generan al firmar</td><td>Guardarlos en la tabla <code>signature_events</code> y emitir un certificado PDF del servidor junto al documento firmado.</td></tr>
+<tr><td>Fotos de documentos hechas con el escáner</td><td>Las haces tú con la cámara o las eliges de tu galería</td><td>Crear el PDF. Se procesan en tu dispositivo; solo se sube a Supabase el documento que decides guardar.</td></tr>
+<tr><td>Texto reconocido en los escaneos (OCR)</td><td>Se extrae en tu dispositivo al guardar el escaneo</td><td>Guardarlo con el documento para que puedas buscar por su contenido.</td></tr>
+<tr><td>Correo electrónico y nombre (opcional) de la persona a la que pides una firma</td><td>Los introduces tú al solicitar la firma</td><td>Enviarle el enlace y un código de un solo uso, y dejar constancia de quién firmó. Pide su firma solo si puedes facilitarnos esos datos.</td></tr>
+<tr><td>Firma dibujada y nombre de esa persona, y código de un solo uso (guardado como hash, con caducidad)</td><td>Los introduce ella al firmar</td><td>Comprobar su identidad y estampar su firma en el documento.</td></tr>
+<tr><td>Datos técnicos del escáner: información del dispositivo (fabricante, modelo y versión del sistema), de la app (nombre del paquete y versión), un identificador por instalación que no pretende identificarte a ti ni a tu dispositivo, métricas de rendimiento, tipo de evento, códigos de error y configuración de la función</td><td>Los recoge el componente ML Kit de Google al usar el escáner</td><td>Diagnóstico y analítica de uso de ese componente por parte de Google. Viajan cifrados y ML Kit no los transfiere a terceros. <strong>No incluyen</strong> tus imágenes ni tus documentos.</td></tr>
 </table>
 
 <h2>3. Qué NO hacemos con tus datos</h2>
@@ -60,16 +65,18 @@
 <li><strong>No vendemos</strong> tus datos.</li>
 <li><strong>No los compartimos</strong> con terceros con fines publicitarios o de marketing.</li>
 <li><strong>No usamos tus documentos</strong> para entrenar modelos de inteligencia artificial.</li>
-<li><strong>No incluimos</strong> publicidad ni rastreadores de terceros.</li>
-<li><strong>No usamos</strong> herramientas de analítica que te identifiquen.</li>
+<li><strong>No incluimos</strong> publicidad ni rastreadores publicitarios de terceros.</li>
+<li><strong>No usamos</strong> herramientas de analítica que te identifiquen (Google Analytics, Firebase Analytics, etc.). El componente ML Kit envía a Google los datos técnicos indicados en el apartado 2.</li>
 </ul>
 
 <h2>4. Proveedores que tratan datos por nosotros (encargados)</h2>
 <p>Para que la app funcione usamos los siguientes proveedores. Firmaremos con ellos los contratos de encargo del tratamiento que exige el RGPD (art. 28).</p>
 <table>
 <tr><th>Proveedor</th><th>Qué hace</th><th>Dónde</th></tr>
-<tr><td>Supabase, Inc.</td><td>Autenticación, base de datos (Postgres) y almacenamiento de los documentos.</td><td>Región UE configurada por el responsable (por defecto <code>eu-west-1</code>, Irlanda).</td></tr>
-<tr><td>Google LLC — Play Services, ML Kit Document Scanner</td><td>Reconocimiento de documentos y recorte durante el escaneo. <strong>Se ejecuta íntegramente en tu dispositivo</strong>; no se envían imágenes a Google.</td><td>Tu dispositivo.</td></tr>
+<tr><td>Supabase, Inc.</td><td>Autenticación, base de datos (Postgres) y almacenamiento de los documentos.</td><td>Región UE configurada por el responsable (<code>eu-west-1</code>, Irlanda).</td></tr>
+<tr><td>Google LLC — Play Services, ML Kit Document Scanner</td><td>Reconocimiento de documentos y recorte durante el escaneo. <strong>Las imágenes se procesan en tu dispositivo</strong> y no se envían a Google. Google recibe los datos técnicos indicados en el apartado 2.</td><td>Procesamiento: tu dispositivo. Datos técnicos: infraestructura de Google.</td></tr>
+<tr><td>Google LLC — ML Kit Text Recognition</td><td>Reconocimiento de texto (OCR) de los escaneos. <strong>Las imágenes se procesan en tu dispositivo.</strong> Google recibe los datos técnicos indicados en el apartado 2.</td><td>Procesamiento: tu dispositivo. Datos técnicos: infraestructura de Google.</td></tr>
+<tr><td>Resend (si pides una firma a otra persona)</td><td>Enviar a esa persona el correo con el enlace y el código de un solo uso. Recibe su dirección de correo, su nombre si lo indicas y el nombre del documento.</td><td>Infraestructura de Resend; puede implicar transferencias fuera de la UE.</td></tr>
 <tr><td>Google LLC — Inicio de sesión con Google (si lo utilizas)</td><td>Comprobar tu identidad al iniciar sesión con Google.</td><td>Infraestructura de Google.</td></tr>
 </table>
 
@@ -77,7 +84,7 @@
 <p>Los documentos y los metadatos se guardan en el proyecto de Supabase del responsable (región UE por defecto, <code>eu-west-1</code>, Irlanda). Se aplica <strong>seguridad a nivel de fila (RLS)</strong>: cada persona solo accede a sus propios documentos. Las comunicaciones viajan <strong>cifradas (HTTPS/TLS)</strong>.</p>
 
 <h2>6. Cuánto tiempo guardamos tus datos</h2>
-<p>Mientras tu cuenta esté activa. Cuando pidas borrar la cuenta desde <strong>Perfil → Borrar cuenta</strong>, se borrarán de forma inmediata: tus documentos, tu perfil y tu usuario del sistema de autenticación. El borrado es definitivo y no se puede deshacer.</p>
+<p>Mientras tu cuenta esté activa. Cuando pidas borrar la cuenta desde <strong>Perfil → Eliminar cuenta y documentos</strong>, se borrarán de forma inmediata: tus documentos, tu perfil y tu usuario del sistema de autenticación. El borrado es definitivo y no se puede deshacer. También puedes pedirlo sin la app en <a href="https://docselemental.com/eliminar-cuenta.html">docselemental.com/eliminar-cuenta.html</a>.</p>
 
 <h2>7. Tus derechos (RGPD)</h2>
 <ul>
@@ -87,8 +94,14 @@
 <p>Para ejercerlos escribe a <a href="mailto:vaqueromuelacarlos@gmail.com">vaqueromuelacarlos@gmail.com</a>. Responderemos en un plazo máximo de un mes.</p>
 <p>También puedes reclamar ante la <strong>Agencia Española de Protección de Datos</strong> (<a href="https://www.aepd.es" target="_blank" rel="noopener">www.aepd.es</a>) si consideras que no te hemos atendido correctamente.</p>
 
-<h2>8. Cookies y almacenamiento local</h2>
-<p>La app usa almacenamiento local del dispositivo (<code>SharedPreferences</code>) para guardar pequeñas preferencias técnicas: la última página leída de cada PDF y si tienes activado el modo "página oscura". No usamos cookies de terceros ni para rastreo.</p>
+<h2>8. Permisos, cookies y almacenamiento local</h2>
+<p>La app pide estos permisos del dispositivo, solo cuando usas la función correspondiente:</p>
+<ul>
+<li><strong>Cámara:</strong> para escanear documentos. Puedes usar la app sin concederlo e importar imágenes desde la galería.</li>
+<li><strong>Huella o biometría:</strong> para el Bloqueo con huella, si lo activas. La comprobación la hace el sistema de tu móvil; la app <strong>nunca recibe ni guarda tu huella</strong>, solo el resultado (correcta o no).</li>
+</ul>
+<p>La app <strong>no</strong> pide permiso de micrófono ni de ubicación.</p>
+<p>La app usa almacenamiento local del dispositivo (<code>SharedPreferences</code>) para guardar: tu firma guardada en Mi firma, que no se sube al servidor salvo cuando firmas un documento; los datos de tu sesión, para no pedirte que entres cada vez; tus preferencias (tema, idioma, formato de exportación, bloqueo con huella y vista de la biblioteca); y la última página leída de cada PDF, el modo "página oscura" del visor y la fecha del último aviso visto. No usamos cookies de terceros ni para rastreo.</p>
 
 <h2>9. Menores de edad</h2>
 <p>La app está pensada para personas mayores de edad (18 años). Si eres menor de 14, no puedes crear una cuenta sin el consentimiento de tus padres o tutores legales.</p>
