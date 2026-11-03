@@ -29,7 +29,7 @@
 <main>
 
 <h1>Política de privacidad — Docselemental</h1>
-<div class="meta"><strong>Versión 1.1</strong> · Última actualización: 31 de octubre de 2026</div>
+<div class="meta"><strong>Versión 1.2</strong> · Última actualización: 3 de noviembre de 2026</div>
 
 <p>Esta política explica cómo Docselemental (en adelante, "la app") trata los datos personales de las personas usuarias.</p>
 
@@ -55,8 +55,8 @@
 <tr><td>Eventos de firma (quién, cuándo, hashes, identificador)</td><td>Se generan al firmar</td><td>Guardarlos en la tabla <code>signature_events</code> y emitir un certificado PDF del servidor junto al documento firmado.</td></tr>
 <tr><td>Fotos de documentos hechas con el escáner</td><td>Las haces tú con la cámara o las eliges de tu galería</td><td>Crear el PDF. Se procesan en tu dispositivo; solo se sube a Supabase el documento que decides guardar.</td></tr>
 <tr><td>Texto reconocido en los escaneos (OCR)</td><td>Se extrae en tu dispositivo al guardar el escaneo</td><td>Guardarlo con el documento para que puedas buscar por su contenido.</td></tr>
-<tr><td>Correo electrónico y nombre (opcional) de la persona a la que pides una firma</td><td>Los introduces tú al solicitar la firma</td><td>Enviarle el enlace y un código de un solo uso, y dejar constancia de quién firmó. Pide su firma solo si puedes facilitarnos esos datos.</td></tr>
-<tr><td>Firma dibujada y nombre de esa persona, y código de un solo uso (guardado como hash, con caducidad)</td><td>Los introduce ella al firmar</td><td>Comprobar su identidad y estampar su firma en el documento.</td></tr>
+<tr><td>Correo electrónico y nombre (opcional) de la persona a la que pides una firma</td><td>Los introduces tú al solicitar la firma</td><td>Enviarle el enlace para firmar y dejar constancia de quién firmó. Pide su firma solo si puedes facilitarnos esos datos.</td></tr>
+<tr><td>Firma dibujada y nombre de esa persona</td><td>Los introduce ella al firmar</td><td>Estampar su firma en el documento y dejar constancia del nombre que declara.</td></tr>
 <tr><td>Datos técnicos del escáner: información del dispositivo (fabricante, modelo y versión del sistema), de la app (nombre del paquete y versión), un identificador por instalación que no pretende identificarte a ti ni a tu dispositivo, métricas de rendimiento, tipo de evento, códigos de error y configuración de la función</td><td>Los recoge el componente ML Kit de Google al usar el escáner</td><td>Diagnóstico y analítica de uso de ese componente por parte de Google. Viajan cifrados y ML Kit no los transfiere a terceros. <strong>No incluyen</strong> tus imágenes ni tus documentos.</td></tr>
 </table>
 
@@ -76,7 +76,7 @@
 <tr><td>Supabase, Inc.</td><td>Autenticación, base de datos (Postgres) y almacenamiento de los documentos.</td><td>Región UE configurada por el responsable (<code>eu-west-1</code>, Irlanda).</td></tr>
 <tr><td>Google LLC — Play Services, ML Kit Document Scanner</td><td>Reconocimiento de documentos y recorte durante el escaneo. <strong>Las imágenes se procesan en tu dispositivo</strong> y no se envían a Google. Google recibe los datos técnicos indicados en el apartado 2.</td><td>Procesamiento: tu dispositivo. Datos técnicos: infraestructura de Google.</td></tr>
 <tr><td>Google LLC — ML Kit Text Recognition</td><td>Reconocimiento de texto (OCR) de los escaneos. <strong>Las imágenes se procesan en tu dispositivo.</strong> Google recibe los datos técnicos indicados en el apartado 2.</td><td>Procesamiento: tu dispositivo. Datos técnicos: infraestructura de Google.</td></tr>
-<tr><td>Resend (si pides una firma a otra persona)</td><td>Enviar a esa persona el correo con el enlace y el código de un solo uso. Recibe su dirección de correo, su nombre si lo indicas y el nombre del documento.</td><td>Infraestructura de Resend; puede implicar transferencias fuera de la UE.</td></tr>
+<tr><td>Resend (si pides una firma a otra persona)</td><td>Enviar a esa persona el correo con el enlace para firmar. Recibe su dirección de correo, su nombre si lo indicas y el nombre del documento.</td><td>Infraestructura de Resend; puede implicar transferencias fuera de la UE.</td></tr>
 <tr><td>Google LLC — Inicio de sesión con Google (si lo utilizas)</td><td>Comprobar tu identidad al iniciar sesión con Google.</td><td>Infraestructura de Google.</td></tr>
 </table>
 
